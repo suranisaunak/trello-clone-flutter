@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:trelloapp/src/constants/constants.dart';
+import 'package:trelloapp/src/providers/auth_provider.dart';
+import 'package:trelloapp/src/views/auth/login_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -26,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
+    final authProvider = Provider.of<AuthProvider>(context);
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -55,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     backgroundColor: Colors.white,
                     foregroundColor: Colors.black,
                     child: Text(
-                      "A",
+                      "D",
                       style: TextStyle(
                           fontSize: 50,
                           fontWeight: FontWeight.bold,
@@ -81,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                           onTap: () {
-                            //_scaffoldKey.currentState.openEndDrawer();
+                            _scaffoldKey.currentState!.openEndDrawer();
                           },
                           leading: Icon(
                             Icons.home,
@@ -103,13 +107,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                   fontWeight: FontWeight.bold, fontSize: 14)),
                           leading: Icon(Icons.logout, color: Colors.black),
                           onTap: () {
-                            /*  logout().then((value) => {
-                                            Navigator.pushReplacement(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        MyApp()))
-                                          }); */
+                               authProvider.logout().then((value) => {
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => LoginScreen()))
+                                }); 
                           },
                         ),
                       ],
